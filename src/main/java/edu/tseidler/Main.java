@@ -9,6 +9,10 @@ public class Main {
 
     @Example public static int z;
 
+    @Example(id = "josif")
+    @Example(id = "henio")
+    public static int a;
+
     public static void main(String[] args) {
         AnnotationProcessor.process();
     }

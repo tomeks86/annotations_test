@@ -22,6 +22,11 @@
                 <configuration>
                     <source>8</source>
                     <target>8</target>
+                    <annotationProcessors>
+                        <annotationProcessor>
+                            edu.tseidler.ToStringAnnotationProcessor
+                        </annotationProcessor>
+                    </annotationProcessors>
                 </configuration>
             </plugin>
             <plugin>

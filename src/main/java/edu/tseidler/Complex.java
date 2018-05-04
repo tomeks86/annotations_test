@@ -4,12 +4,20 @@ import java.util.Objects;
 
 @ToString
 public class Complex {
-    @ToString(includeName = false) private final int real;
-    @ToString(includeName = false) private final int imag;
+    private final int real;
+    private final int imag;
 
     Complex(int real, int imag) {
         this.real = real;
         this.imag = imag;
+    }
+
+    @ToString(includeName = false) public int getReal() {
+        return real;
+    }
+
+    @ToString(includeName = false) public int getImag() {
+        return imag;
     }
 
     @Override

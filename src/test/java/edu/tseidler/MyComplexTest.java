@@ -18,11 +18,4 @@ public class MyComplexTest {
 
         Assert.assertTrue(myNumber.equals(new Complex(2, 1)));
     }
-
-    @Test
-    public void shouldShowToString() {
-        String myNumberRepresentaiton = ToStringGenerator.toString(myNumber);
-
-        Assert.assertEquals(myNumberRepresentaiton, "Complex[1,0]");
-    }
 }

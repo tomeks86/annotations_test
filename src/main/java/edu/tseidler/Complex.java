@@ -2,10 +2,9 @@ package edu.tseidler;
 
 import java.util.Objects;
 
-@ToString
 public class Complex {
-    @ToString(includeName = false) private final int real;
-    @ToString(includeName = false) private final int imag;
+    private final int real;
+    private final int imag;
 
     Complex(int real, int imag) {
         this.real = real;

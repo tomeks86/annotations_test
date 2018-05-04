@@ -21,7 +21,7 @@ public class MyComplexTest {
 
     @Test
     public void shouldShowToString() {
-        String myNumberRepresentaiton = myNumber.toString();
+        String myNumberRepresentaiton = ToStringGenerator.toString(myNumber);
 
         Assert.assertEquals(myNumberRepresentaiton, "Complex[1,0]");
     }

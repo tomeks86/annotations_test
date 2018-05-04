@@ -2,9 +2,10 @@ package edu.tseidler;
 
 import java.util.Objects;
 
+@ToString
 public class Complex {
-    private final int real;
-    private final int imag;
+    @ToString(includeName = false) private final int real;
+    @ToString(includeName = false) private final int imag;
 
     Complex(int real, int imag) {
         this.real = real;
@@ -23,15 +24,6 @@ public class Complex {
     @Override
     public int hashCode() {
         return Objects.hash(real, imag);
-    }
-
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("Complex{");
-        sb.append("real=").append(real);
-        sb.append(", imag=").append(imag);
-        sb.append('}');
-        return sb.toString();
     }
 
     Complex add(Complex other) {

@@ -35,9 +35,9 @@ public class ToStringAnnotationProcessor extends AbstractProcessor {
                         writeToStringMethod(out, te);
                     }
                 }
-                out.println("   public static String toString(Object obj) {");
-                out.println("       return java.util.Objects.toString(obj);");
-                out.println("   }");
+                out.println("    public static String toString(Object obj) {");
+                out.println("        return java.util.Objects.toString(obj);");
+                out.println("    }");
                 out.println("}");
             }
         } catch (IOException e) {
@@ -50,12 +50,12 @@ public class ToStringAnnotationProcessor extends AbstractProcessor {
     private void writeToStringMethod(PrintWriter out, TypeElement te) {
         String className = te.getQualifiedName().toString();
         out.printf("    public static String toString(%s obj) {\n", className);
-        out.println("       StringBuilder result = new StringBuilder();");
+        out.println("        StringBuilder result = new StringBuilder();");
         ToString ann = te.getAnnotation(ToString.class);
         if (ann.includeName())
             out.printf("        result.append(\"%s[\");\n", className);
         else
-            out.println("       result.append(\"[\");");
+            out.println("        result.append(\"[\");");
         boolean first = true;
         for (Element element : te.getEnclosedElements()) {
             String methodName = element.getSimpleName().toString();
@@ -64,16 +64,16 @@ public class ToStringAnnotationProcessor extends AbstractProcessor {
                 if (first)
                     first = false;
                 else
-                    out.println("       result.append(\",\");");
+                    out.println("        result.append(\",\");");
                 if (ann.includeName()) {
                     String fieldName = Introspector.decapitalize(methodName.replaceAll("^(get|is)}", ""));
-                    out.printf("        result.append(\"%s=\");", fieldName);
+                    out.printf("         result.append(\"%s=\");", fieldName);
                 }
                 out.printf("        result.append(toString(obj.%s()));\n", methodName);
             }
         }
-        out.println("       result.append(\"]\");");
-        out.println("       return result.toString();");
-        out.println("   }");
+        out.println("        result.append(\"]\");");
+        out.println("        return result.toString();");
+        out.println("    }");
     }
 }

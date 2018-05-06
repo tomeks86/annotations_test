@@ -69,9 +69,9 @@ public class BuilderProcessor extends AbstractProcessor {
             packageName = className.substring(0, lastDot);
         }
 
-        String simplaClassName = className.substring(lastDot + 1);
+        String simpleClassName = className.substring(lastDot + 1);
         String builderClassName = className + "Builder";
-        String builderSimpleClassName = builderClassName.substring(lastDot + 1);
+        String builderSimpleClassName = simpleClassName + "Builder";
 
         JavaFileObject builderFile = processingEnv.getFiler()
                 .createSourceFile(builderClassName);
@@ -79,39 +79,41 @@ public class BuilderProcessor extends AbstractProcessor {
         try (PrintWriter out = new PrintWriter(builderFile.openWriter())) {
 
             if (packageName != null) {
-                out.println("package ");
+                out.print("package ");
                 out.print(packageName);
                 out.println(";");
+                out.println();
             }
 
             out.println("public class ");
             out.print(builderSimpleClassName);
-            out.println(" {");
+            out.print(" {");
             out.println();
 
             out.print("    private ");
-            out.print(simplaClassName);
+            out.print(simpleClassName);
             out.print(" object = new ");
-            out.print(simplaClassName);
-            out.print("();");
+            out.print(simpleClassName);
+            out.println("();");
             out.println();
 
             out.print("    public ");
-            out.print(simplaClassName);
+            out.print(simpleClassName);
             out.println(" build() {");
-            out.print("        return object;");
+            out.println("        return object;");
             out.println("    }");
+            out.println();
 
             setterMap.entrySet().forEach(setter -> {
                 String methodName = setter.getKey();
                 String argumentType = setter.getValue();
 
                 out.print("    public ");
-                out.print(builderClassName);
+                out.print(builderSimpleClassName);
                 out.print(" ");
                 out.print(methodName);
                 out.print("(");
-                out.print(builderSimpleClassName);
+                out.print(argumentType);
                 out.println(" value) {");
                 out.print("        object.");
                 out.print(methodName);

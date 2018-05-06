@@ -1,4 +1,4 @@
-package edu.tseidler;
+package edu.tseidler.processor;
 
 import com.google.auto.service.AutoService;
 
@@ -17,12 +17,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
-@SupportedAnnotationTypes("edu.tseidler.BuilderProperty")
+@SupportedAnnotationTypes("edu.tseidler.processor.BuilderProperty")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Processor.class)
 public class BuilderProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+        processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, "HELLO FROM MY ANNOTATION PROCESSOR!");
+
         for (TypeElement annotation : annotations) {
             Set<? extends Element> annotadedElements = roundEnv.getElementsAnnotatedWith(annotation);
 
@@ -42,6 +44,8 @@ public class BuilderProcessor extends AbstractProcessor {
                 continue;
             }
 
+            String className = ((TypeElement) setters.get(0).getEnclosingElement()).getQualifiedName().toString();
+
             Map<String, String> setterMap = setters.stream()
                     .collect(Collectors.toMap(
                             setter -> setter.getSimpleName().toString(),
@@ -49,7 +53,7 @@ public class BuilderProcessor extends AbstractProcessor {
                                     .getParameterTypes().get(0).toString()));
 
             try {
-                writeBuilderFile(annotation.getClass().toString(), setterMap);
+                writeBuilderFile(className, setterMap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
